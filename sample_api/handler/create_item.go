@@ -23,7 +23,9 @@ func CreateItems(c echo.Context) error {
 	req := CreateItemRequest{}
 	if err := c.Bind(&req); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
-	}
+	} else if err := c.Validate(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	} 
 
 	var items entity.Items
 	for _, item := range req.Items {
